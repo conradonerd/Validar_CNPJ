@@ -1,0 +1,59 @@
+import re
+
+
+def remover_caracteres(cpf):
+    return re.sub(r'[^0-9]', '', cpf)
+
+
+def digito1():
+    dig1 = 0
+    cnpj_teste_list = []
+    for i in cnpj_teste:
+        cnpj_teste_list.append(int(i))
+    for j in range(0, 4):
+        cnpj_teste_list[j] *= 5 - j
+    for j in range(4, 12):
+        cnpj_teste_list[j] *= 13 - j
+    cnpj_teste_list.pop()
+    cnpj_teste_list.pop()
+    for j in cnpj_teste_list:
+        dig1 += j
+    dig1 = 11 - (dig1 % 11)
+    if dig1 > 9:
+        dig1 = 0
+    cnpj_teste_list.append(dig1)
+    if dig1 == int(cnpj_teste[12]):
+        return True
+    else:
+        return False
+
+
+def digito2():
+    dig2 = 0
+    cnpj_teste_list = []
+    for i in cnpj_teste:
+        cnpj_teste_list.append(int(i))
+    for j in range(0, 5):
+        cnpj_teste_list[j] *= 6 - j
+    for j in range(5, 13):
+        cnpj_teste_list[j] *= 14 - j
+    cnpj_teste_list.pop()
+    for j in cnpj_teste_list:
+        dig2 += j
+    dig2 = 11 - (dig2 % 11)
+    if dig2 > 9:
+        dig2 = 0
+    if dig2 == int(cnpj_teste[13]):
+        return True
+    else:
+        return False
+
+
+while True:
+    cnpj = input('Digite seu CNPJ: ')
+    cnpj_teste = remover_caracteres(cnpj)
+
+    if digito1() and digito2():
+        print(f'O CNPJ {cnpj} é válido.')
+    else:
+        print(f'O CNPJ {cnpj} não é válido')
